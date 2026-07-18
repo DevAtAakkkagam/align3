@@ -1,0 +1,59 @@
+/* ---- The Two Floors ---------------------------------------------------- */
+/* Drenched surfaces: the theme's floor material fills the viewport.        */
+
+[data-variant='roman'] {
+  /* Warm limestone paving, lines carved a shade deeper. */
+  --floor: oklch(0.92 0.025 85);
+  --line: oklch(0.72 0.045 78);
+  --line-soft: oklch(0.82 0.035 82);
+  --dimple: oklch(0.8 0.04 80);
+  --ink: oklch(0.32 0.03 70);
+  --ink-dim: oklch(0.52 0.035 75);
+  --glow: oklch(0.58 0.12 70);
+  --chrome-bg: oklch(0.88 0.03 84);
+}
+
+[data-variant='tamil'] {
+  /* Deep red-oxide floor, lines chalked in warm off-white. */
+  --floor: oklch(0.41 0.075 35);
+  --line: oklch(0.93 0.02 90);
+  --line-soft: oklch(0.62 0.06 38);
+  --dimple: oklch(0.51 0.07 37);
+  --ink: oklch(0.95 0.015 90);
+  --ink-dim: oklch(0.75 0.035 60);
+  --glow: oklch(0.87 0.11 85);
+  --chrome-bg: oklch(0.46 0.07 36);
+}
+
+:root {
+  /* Stones keep their identity on both floors: shape + color + rim. */
+  --p1-stone: oklch(0.37 0.06 265);
+  --p1-rim: oklch(0.92 0.02 90);
+  --p2-stone: oklch(0.75 0.12 75);
+  --p2-rim: oklch(0.3 0.03 60);
+
+  --serif: 'Cinzel', 'Times New Roman', serif;
+  --sans: 'Nunito Sans', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--sans);
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+  height: 100%;
+}
