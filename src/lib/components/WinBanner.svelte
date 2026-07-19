@@ -97,7 +97,7 @@
     background: var(--floor);
   }
 
-  @media (orientation: landscape) {
+  @media (orientation: landscape) and (max-height: 699px) {
     .flip .panel {
       transform: none;
     }

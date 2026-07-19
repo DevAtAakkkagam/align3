@@ -213,14 +213,16 @@
     }
   }
 
-  /* chrome clearance only where the corner icons can actually collide */
-  @media (max-width: 600px) {
+  /* chrome clearance only where the corner icons can actually collide:
+     narrow viewports, or the phone frame on desktop */
+  @media (max-width: 600px), (min-width: 520px) and (min-height: 700px) {
     .strip {
       padding-inline: 58px;
     }
   }
 
-  @media (orientation: landscape) {
+  /* real phone landscape only — desktop stays in the portrait frame */
+  @media (orientation: landscape) and (max-height: 699px) {
     main {
       flex-direction: row;
     }
