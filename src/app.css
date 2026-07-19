@@ -69,6 +69,9 @@ body {
 @media (min-width: 520px) and (min-height: 700px) {
   body {
     display: grid;
+    /* First row is one full viewport: the frame centers inside it and the
+       about section starts below the fold. */
+    grid-template-rows: 100dvh auto;
     place-items: center;
     background: oklch(0.23 0.02 55);
   }
