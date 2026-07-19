@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run test:watch` — watch mode
 - Single test file: `npx vitest run src/lib/game/rules.test.ts`; filter by name: `npx vitest run -t "pattern"`
 
-Deployment is GitHub Pages via `.github/workflows/deploy.yml` on push to master; it runs tests, then builds with `--base=/align3/`.
+Deployment is GitHub Pages via `.github/workflows/deploy.yml` on push to main; it runs tests, then builds with `--base=/align3/`.
 
 ## What this is
 
