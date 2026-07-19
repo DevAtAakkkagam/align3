@@ -2,7 +2,12 @@
   import { Spring } from 'svelte/motion';
   import { game, type Stone } from '../store.svelte';
   import { handPos, nearestPoint, pointPos } from '../geometry';
-  import { prefersReducedMotion, SPRING_FOLLOW, SPRING_SETTLE } from '../motion';
+  import {
+    prefersReducedMotion,
+    SPRING_FOLLOW,
+    SPRING_SETTLE,
+    SPRING_SHAKE,
+  } from '../motion';
 
   let { stone }: { stone: Stone } = $props();
 
@@ -30,6 +35,9 @@
   const grabbable = $derived(game.canGrab(stone.id));
   const selected = $derived(game.selected === stone.id);
   const lifted = $derived(game.dragging === stone.id);
+  const wrongTurn = $derived(
+    game.state.phase !== 'won' && stone.player !== game.turn,
+  );
 
   /** Snap radius when releasing a drag, in stage units. */
   const SNAP = 10;
@@ -47,8 +55,35 @@
     return { x: pt.x, y: pt.y };
   }
 
+  let bodyEl: SVGGElement;
+  let shakeTimer: ReturnType<typeof setTimeout>;
+
+  /** Wrong-turn grab: the stone shakes its head, never leaving its point. */
+  function refuse() {
+    game.denyGrab();
+    if (prefersReducedMotion()) {
+      bodyEl.animate({ opacity: [1, 0.45, 1] }, { duration: 240, easing: 'ease-out' });
+      return;
+    }
+    clearTimeout(shakeTimer);
+    pos.stiffness = SPRING_SHAKE.stiffness;
+    pos.damping = SPRING_SHAKE.damping;
+    pos.set({ x: anchor.x - 1.7, y: anchor.y }, { instant: true });
+    pos.target = anchor;
+    shakeTimer = setTimeout(() => {
+      if (game.dragging !== stone.id) {
+        pos.stiffness = SPRING_SETTLE.stiffness;
+        pos.damping = SPRING_SETTLE.damping;
+      }
+    }, 500);
+  }
+
   function down(e: PointerEvent) {
-    if (!grabbable || pointerId !== -1) return;
+    if (pointerId !== -1) return;
+    if (!grabbable) {
+      if (wrongTurn) refuse();
+      return;
+    }
     svg = (e.currentTarget as SVGGraphicsElement).ownerSVGElement;
     pointerId = e.pointerId;
     const p = toStage(e);
@@ -107,7 +142,7 @@
   {#if lifted}
     <ellipse class="shadow" cx="0.6" cy="1.6" rx="5.6" ry="4.6" />
   {/if}
-  <g class="body">
+  <g class="body" bind:this={bodyEl}>
     {#if stone.player === 0}
       <circle r="5" class="fill" />
       <circle r="3.1" class="rim" fill="none" />

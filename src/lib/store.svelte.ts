@@ -39,6 +39,12 @@ class Game {
   selected = $state<number | null>(null);
   /** Stone currently being dragged. */
   dragging = $state<number | null>(null);
+  /** Bumped when a stone is grabbed out of turn; UI answers by pointing at whose turn it is. */
+  denied = $state(0);
+
+  denyGrab(): void {
+    this.denied++;
+  }
 
   get turn(): Player {
     return this.state.turn;
