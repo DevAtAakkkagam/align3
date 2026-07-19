@@ -103,6 +103,18 @@
       />
     </svg>
   </a>
+  <a class="icon" aria-label="send feedback" href="mailto:admin@aakkagam.com?subject=Feedback%20from%20align3">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M4 6h16v12H4z M4 6l8 7 8-7"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </a>
   <button class="icon" aria-label="restart game" onclick={clickRestart}>
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path
